@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
-import matplotlib as plt
-from sklearn.metrics import roc_auc_score, precision_recall_curve
-from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_auc_score, classification_report, roc_curve
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, OrdinalEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import GridSearchCV
@@ -14,7 +13,7 @@ class Preprocessing:
     нормализует данные для линейных методов
     """
 
-    def __init__(self, cat: list, num: list, is_linear: bool, fill_func: np.function_base = np.mean):
+    def __init__(self, cat: list, num: list, is_linear: bool, fill_func=np.mean):
         """
 
         :param cat: категориальные признаки
@@ -73,7 +72,10 @@ class Preprocessing:
         """
         df[self.to_binarize] = df[self.to_binarize].isna().astype(int)
         df[self.cat] = df[self.cat].fillna(-1)
-        df[self.num] = df[self.num].fillna(value=self.fill_values)
+        if self.is_linear:
+            df[self.num] = df[self.num].fillna(value=self.fill_values)
+        else:
+            df[self.num] = df[self.num].fillna(value=-1000)
         df = self.column_transformer.transform(df)
         return df
 
@@ -121,5 +123,30 @@ class Pipe:
         print()
         return self.final_model.best_estimator_
 
-    def inference(self):
+    def inference(self, x_test, y_test):
+        x_test = self.prep.transform(x_test)
+        y_pred_proba = self.final_model.predict_proba(x_test)[:, 1]
+        y_pred_class = self.final_model.predict(x_test)
+        print('-----------------------------------------------')
+        print(f'ROC_AUC on test - {roc_auc_score(y_test, y_pred_proba)}')
+        print(classification_report(y_test, y_pred_class, target_names=['class 0', 'class 1']))
+
+        false_positive_rate, true_positive_rate, thresolds = roc_curve(y_test, y_pred_proba)
+        plt.figure(figsize=(10, 8), dpi=100)
+        plt.axis('scaled')
+        plt.xlim([0, 1])
+        plt.ylim([0, 1])
+        plt.title("AUC & ROC Curve")
+        plt.plot(false_positive_rate, true_positive_rate, 'g')
+        plt.fill_between(false_positive_rate, true_positive_rate, facecolor='lightgreen', alpha=0.7)
+        #plt.text(0.95, 0.05, ha='right', fontsize=12, weight='bold', color='blue')
+        plt.xlabel("False Positive Rate")
+        plt.ylabel("True Positive Rate")
+        plt.show()
+
+        figure, axis = plt.subplots(1, 2, figsize=(10, 15))
+        axis[0].hist(y_pred_proba[y_test == 1])
+        axis[0].set_title('1 CLASS')
+        axis[1].hist(y_pred_proba[y_test == 0])
+        axis[1].set_title('0 CLASS')
         return
