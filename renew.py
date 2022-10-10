@@ -18,7 +18,7 @@ def splitter(df: pd.DataFrame, features: list, y: str) -> tuple[pd.DataFrame, pd
 
     @return:
     """
-    x_train, x_test, y_train, y_test = train_test_split(df[features], df[y], TEST_SIZE)
+    x_train, x_test, y_train, y_test = train_test_split(df[features], df[y], test_size=TEST_SIZE)
     return x_train, x_test, y_train, y_test
 
 
@@ -139,7 +139,8 @@ class Pipe:
                                    scoring='roc_auc',
                                    return_train_score=False,
                                    verbose=1,
-                                   n_jobs=-1)
+                                   n_jobs=-1,
+                                   error_score='raise')
         final_model.fit(x_train, y_train)
         print('-----------------------------------------------------------------------------------------------------')
         print(f'best_params for {self.estimator_name} is {final_model.best_params_}')

@@ -53,7 +53,8 @@ def run(data_folder: str = DATA_FOLDER_NAME, predict_folder: str = PREDICT_FOLDE
                                                         DATAFRAMES[filename]['features'],
                                                         DATAFRAMES[filename]['y'])
             for model in MODELS:
-                model_run(filename[:-4], x_train, x_test, y_train, y_test, model, predict_path, visualisation_path)
+                print(f'{MODELS[model]["estimator_name"]} has started to fit')
+                model_run(filename[:-4], x_train, x_test, y_train, y_test, MODELS[model], predict_path, visualisation_path)
 
             print(f'Ended working with {filename[:-4]} dataset. Switching to next.')
 
