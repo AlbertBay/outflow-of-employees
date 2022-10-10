@@ -8,6 +8,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.metrics import roc_auc_score, classification_report, roc_curve
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, OrdinalEncoder
+from sklearn.naive_bayes import GaussianNB
 from typing import Callable, Optional
 
 from constants import TEST_SIZE
@@ -133,6 +134,8 @@ class Pipe:
         """
         self.prep = Preprocessing(cat=cat, num=num, is_linear=self.is_linear)
         x_train = self.prep.fit_transform(x_train)
+        # очень плохо, но что делать
+        x_train = x_train.todense() if isinstance(self.model, GaussianNB) else x_train
         final_model = GridSearchCV(self.model,
                                    params,
                                    cv=cv,
@@ -156,6 +159,8 @@ class Pipe:
         @param y_test:
         """
         x_test = self.prep.transform(x_test)
+        # очень плохо, но что делать
+        x_test = x_test.todense() if isinstance(self.model, GaussianNB) else x_test
         y_pred_proba = self.final_model.predict_proba(x_test)[:, 1]
         y_pred_class = self.final_model.predict(x_test)
         print('-----------------------------------------------')

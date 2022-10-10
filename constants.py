@@ -20,12 +20,12 @@ MODELS = {
 
     0: {'estimator_name': 'CatBoost',
         'is_linear': False,
-        'params': {'learning_rate': [0.1, 0.5, 1], 'iterations': [100, 500, 1000], 'depth': [5, 10, 15, 30],
+        'params': {'learning_rate': [0.1, 0.5, 1], 'iterations': [100, 500, 1000], 'depth': [5, 10, 15],
                    'thread_count': [-1]},
         'model': CatBoostClassifier(verbose=False)},
     1: {'estimator_name': 'LGBM',
         'is_linear': False,
-        'params': {'learning_rate': [0.1, 0.5, 1], 'n_estimators': [100, 500, 1000], 'max_depth': [5, 10, 15, 30],
+        'params': {'learning_rate': [0.1, 0.5, 1], 'n_estimators': [100, 500, 1000], 'max_depth': [5, 10, 15],
                    'n_jobs': [-1]},
         'model': LGBMClassifier()},
     2: {'estimator_name': 'Decision tree',
@@ -52,10 +52,10 @@ MODELS = {
         'params': {'C': [1.0, 0.5, 0.2], 'kernel': ['linear', 'poly']},
         'model': SVC(probability=True)},
    # TODO: не работает на спарс матрицах
-   #7: {'estimator_name': 'Naive Bayes',
-   #     'is_linear': True,
-   #     'params': {'priors': [None]},
-   #     'model': GaussianNB()},
+   7: {'estimator_name': 'Naive Bayes',
+        'is_linear': True,
+        'params': {'priors': [None]},
+        'model': GaussianNB()},
 
 
 
