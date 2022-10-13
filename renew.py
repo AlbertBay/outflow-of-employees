@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -19,7 +22,7 @@ def splitter(df: pd.DataFrame, features: list, y: str) -> tuple[pd.DataFrame, pd
 
     @return:
     """
-    x_train, x_test, y_train, y_test = train_test_split(df[features], df[y], test_size=TEST_SIZE)
+    x_train, x_test, y_train, y_test = train_test_split(df[features], df[y], test_size=TEST_SIZE, stratify=df[y])
     return x_train, x_test, y_train, y_test
 
 
@@ -55,6 +58,8 @@ class Preprocessing:
                 ('scaling', StandardScaler(), self.num)
             ])
         else:
+            print(self.cat)
+            print(self.num)
             self.column_transformer = ColumnTransformer([
                 ('ordinal', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1), self.cat),
                 ('chill', 'passthrough', self.num)
@@ -66,6 +71,8 @@ class Preprocessing:
         @param df:
         @return:
         """
+        df[self.cat] = df[self.cat].astype(str)
+        df[self.num] = df[self.num].astype(float)
         self.to_binarize = np.array(df.columns)[(df.isna().sum() / df.shape[0] > 0.5).values]
         df[self.to_binarize] = df[self.to_binarize].isna().astype(int)
         if self.is_linear:
@@ -83,6 +90,8 @@ class Preprocessing:
         @param df:
         @return:
         """
+        df[self.cat] = df[self.cat].astype(str)
+        df[self.num] = df[self.num].astype(float)
         df[self.to_binarize] = df[self.to_binarize].isna().astype(int)
         df[self.cat] = df[self.cat].fillna(-1)
         if self.is_linear:
@@ -135,7 +144,8 @@ class Pipe:
         self.prep = Preprocessing(cat=cat, num=num, is_linear=self.is_linear)
         x_train = self.prep.fit_transform(x_train)
         # очень плохо, но что делать
-        x_train = x_train.todense() if isinstance(self.model, GaussianNB) else x_train
+        if isinstance(self.model, GaussianNB) & (not isinstance(x_train, np.ndarray)):
+            x_train = x_train.todense()
         final_model = GridSearchCV(self.model,
                                    params,
                                    cv=cv,
@@ -160,7 +170,8 @@ class Pipe:
         """
         x_test = self.prep.transform(x_test)
         # очень плохо, но что делать
-        x_test = x_test.todense() if isinstance(self.model, GaussianNB) else x_test
+        if isinstance(self.model, GaussianNB) & (not isinstance(x_test, np.ndarray)):
+            x_test = x_test.todense()
         y_pred_proba = self.final_model.predict_proba(x_test)[:, 1]
         y_pred_class = self.final_model.predict(x_test)
         print('-----------------------------------------------')
