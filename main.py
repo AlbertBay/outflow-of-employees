@@ -1,4 +1,5 @@
 import os
+import sys
 import pandas as pd
 
 from time import time
@@ -6,10 +7,11 @@ from warnings import simplefilter
 
 from constants import AUTO_ML, DATA_FOLDER_NAME, DATAFRAMES, LOG_FOLDER_NAME, MODELS, PREDICT_FOLDER_NAME, \
     VISUALISATION_FOLDER_NAME
-from renew import Pipe, splitter, LAMA
+from pipes import Pipe, splitter, LAMA
 
 simplefilter(action='ignore', category=FutureWarning)
 
+sys.stdout = open('res.txt', 'w')
 
 def model_run(df_name: str, x_train: pd.DataFrame, x_test: pd.DataFrame, x_val: pd.DataFrame, y_train: pd.Series,
               y_test: pd.Series, y_val: pd.Series, model: dict, storage_path: str, visualisation_path: str):

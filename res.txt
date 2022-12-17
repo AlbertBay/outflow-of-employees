@@ -1,0 +1,199 @@
+Started working with turnover dataset.
+CatBoost
+Categorical features are ['gender', 'industry', 'profession', 'traffic', 'coach', 'head_gender', 'greywage', 'way']
+Numeric features are ['stag', 'age', 'extraversion', 'independ', 'selfcontrol', 'anxiety', 'novator']
+Fitting 5 folds for each of 18 candidates, totalling 90 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for CatBoost is {'depth': 5, 'iterations': 200, 'learning_rate': 0.1, 'thread_count': -1}
+best_f1_score on train for CatBoost is 0.6221282786042511
+starting calibration
+Best Threshold is 0.422267 with F-Score=0.713 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.7271303258145363
+F1 on test - 0.7149321266968326
+              precision    recall  f1-score   support
+
+     class 0       0.81      0.33      0.47       168
+     class 1       0.58      0.92      0.71       171
+
+    accuracy                           0.63       339
+   macro avg       0.70      0.63      0.59       339
+weighted avg       0.69      0.63      0.59       339
+
+-----------------------------------------------------------------------------------------------------
+
+LGBM
+Categorical features are ['gender', 'industry', 'profession', 'traffic', 'coach', 'head_gender', 'greywage', 'way']
+Numeric features are ['stag', 'age', 'extraversion', 'independ', 'selfcontrol', 'anxiety', 'novator']
+Fitting 5 folds for each of 18 candidates, totalling 90 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for LGBM is {'learning_rate': 1, 'max_depth': 10, 'n_estimators': 500, 'n_jobs': -1}
+best_f1_score on train for LGBM is 0.618777336593267
+starting calibration
+Best Threshold is 0.405111 with F-Score=0.715 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.7251113895850738
+F1 on test - 0.7081545064377682
+              precision    recall  f1-score   support
+
+     class 0       0.86      0.23      0.36       168
+     class 1       0.56      0.96      0.71       171
+
+    accuracy                           0.60       339
+   macro avg       0.71      0.60      0.53       339
+weighted avg       0.71      0.60      0.53       339
+
+-----------------------------------------------------------------------------------------------------
+
+Decision tree
+Categorical features are ['gender', 'industry', 'profession', 'traffic', 'coach', 'head_gender', 'greywage', 'way']
+Numeric features are ['stag', 'age', 'extraversion', 'independ', 'selfcontrol', 'anxiety', 'novator']
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for Decision tree is {'max_depth': 30}
+best_f1_score on train for Decision tree is 0.6056570420743954
+starting calibration
+Best Threshold is 0.522982 with F-Score=0.672 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.5573308270676691
+F1 on test - 0.5689655172413793
+              precision    recall  f1-score   support
+
+     class 0       0.56      0.54      0.55       168
+     class 1       0.56      0.58      0.57       171
+
+    accuracy                           0.56       339
+   macro avg       0.56      0.56      0.56       339
+weighted avg       0.56      0.56      0.56       339
+
+-----------------------------------------------------------------------------------------------------
+
+Random Forest
+Categorical features are ['gender', 'industry', 'profession', 'traffic', 'coach', 'head_gender', 'greywage', 'way']
+Numeric features are ['stag', 'age', 'extraversion', 'independ', 'selfcontrol', 'anxiety', 'novator']
+Fitting 5 folds for each of 12 candidates, totalling 60 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for Random Forest is {'max_depth': 30, 'n_estimators': 500, 'n_jobs': -1}
+best_f1_score on train for Random Forest is 0.6322872735352119
+starting calibration
+Best Threshold is 0.470223 with F-Score=0.717 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.7201684767474241
+F1 on test - 0.7093821510297483
+              precision    recall  f1-score   support
+
+     class 0       0.78      0.34      0.47       168
+     class 1       0.58      0.91      0.71       171
+
+    accuracy                           0.63       339
+   macro avg       0.68      0.62      0.59       339
+weighted avg       0.68      0.63      0.59       339
+
+-----------------------------------------------------------------------------------------------------
+
+KNN
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for KNN is {'n_jobs': -1, 'n_neighbors': 5}
+best_f1_score on train for KNN is 0.56765150470882
+starting calibration
+Best Threshold is 0.453141 with F-Score=0.672 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.6673454469507101
+F1 on test - 0.6680161943319839
+              precision    recall  f1-score   support
+
+     class 0       0.62      0.06      0.11       168
+     class 1       0.51      0.96      0.67       171
+
+    accuracy                           0.52       339
+   macro avg       0.57      0.51      0.39       339
+weighted avg       0.57      0.52      0.39       339
+
+-----------------------------------------------------------------------------------------------------
+
+LogReg
+Fitting 5 folds for each of 9 candidates, totalling 45 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for LogReg is {'C': 1.0, 'max_iter': 100, 'n_jobs': -1}
+best_f1_score on train for LogReg is 0.5944797881603736
+starting calibration
+Best Threshold is 0.508571 with F-Score=0.696 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.6238512949039265
+F1 on test - 0.6620689655172414
+              precision    recall  f1-score   support
+
+     class 0       0.64      0.29      0.40       168
+     class 1       0.55      0.84      0.66       171
+
+    accuracy                           0.57       339
+   macro avg       0.59      0.56      0.53       339
+weighted avg       0.59      0.57      0.53       339
+
+-----------------------------------------------------------------------------------------------------
+
+SVC
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for SVC is {'C': 1.0, 'kernel': 'poly'}
+best_f1_score on train for SVC is 0.6449737853762195
+starting calibration
+Best Threshold is 0.517903 with F-Score=0.700 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.7031815650236702
+F1 on test - 0.6868250539956804
+              precision    recall  f1-score   support
+
+     class 0       0.74      0.21      0.33       168
+     class 1       0.54      0.93      0.69       171
+
+    accuracy                           0.57       339
+   macro avg       0.64      0.57      0.51       339
+weighted avg       0.64      0.57      0.51       339
+
+-----------------------------------------------------------------------------------------------------
+
+Naive Bayes
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+------------------------------------TRAINING INFO-------------------------------------------------
+best_params for Naive Bayes is {'priors': None}
+best_f1_score on train for Naive Bayes is 0.18727333446618896
+starting calibration
+Best Threshold is 0.564858 with F-Score=0.672 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_Auc on test - 0.6269493177387914
+F1 on test - 0.6666666666666666
+              precision    recall  f1-score   support
+
+     class 0       0.64      0.12      0.21       168
+     class 1       0.52      0.93      0.67       171
+
+    accuracy                           0.53       339
+   macro avg       0.58      0.53      0.44       339
+weighted avg       0.58      0.53      0.44       339
+
+-----------------------------------------------------------------------------------------------------
+
+LAMA processing
+------------------------------------TRAINING INFO-------------------------------------------------
+best_f1_score on train for LAMA is 0.7241379310344828
+starting calibration
+Best Threshold is 0.577748 with F-Score=0.703 on validation
+------------------------------------TESTING INFO-------------------------------------------------
+Roc_auc on test - 0.640072403230298
+F1 on test - 0.6725663716814159
+              precision    recall  f1-score   support
+
+     class 0       0.67      0.23      0.35       168
+     class 1       0.54      0.89      0.67       171
+
+    accuracy                           0.56       339
+   macro avg       0.61      0.56      0.51       339
+weighted avg       0.61      0.56      0.51       339
+
+-----------------------------------------------------------------------------------------------------
+
+Ended working with turnover dataset. Switching to next.
+Total time spent: 65.894s
+Finish!
